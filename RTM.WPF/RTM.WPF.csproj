@@ -201,6 +201,7 @@
     <Compile Include="Clients\MainServer\AuthClient.cs" />
     <Compile Include="Clients\MainServer\BaseRestClient.cs" />
     <Compile Include="Clients\MainServer\ChatClient.cs" />
+    <Compile Include="Clients\MainServer\UserClient.cs" />
     <Compile Include="Clients\Other\Models\TestModel.cs" />
     <Compile Include="Clients\Other\TestModelClient.cs" />
     <Compile Include="Converters\MessageAligConverter.cs" />

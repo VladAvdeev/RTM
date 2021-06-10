@@ -57,7 +57,7 @@
             </Grid.RowDefinitions>
             <Border Background="#2471A3">
                 <TextBlock Text="{Binding SelectedChatGroup.Name}" FontSize="30" 
-                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" HorizontalAlignment="Left"
                            />
             </Border>
             <ListBox  ItemsSource="{Binding SelectedChatGroup.Messages}"  Grid.Row="1">

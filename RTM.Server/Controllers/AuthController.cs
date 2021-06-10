@@ -33,7 +33,7 @@ namespace RTM.Server.Controllers
         {
             DataCache.UserRepository.AddUser(name);
         }
-        [HttpPut("rename-user/{id}/name")]
+        [HttpPut("rename-user/{id}/{name}")]
         public void RenameUser(int id, string name)
         {
             DataCache.UserRepository.UserRename(id, name);

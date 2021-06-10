@@ -19,5 +19,6 @@ namespace RTM.WPF.Clients.MainServer
             client.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
             return client;
         }
+        
     }
 }

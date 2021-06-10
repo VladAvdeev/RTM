@@ -20,6 +20,7 @@ namespace RTM.WPF.ViewModels
             set => SetProperty(ref name, value);
         }
         public ICommand AuthCommand { get; }
+        public ICommand RegisterCommand { get; }
         public AuthViewModel()
         {
             AuthCommand = new Command(Auth, () =>Name != null && Name.Length != 0);
@@ -36,5 +37,6 @@ namespace RTM.WPF.ViewModels
                 window.Show();
             }
         }
+        
     }
 }
