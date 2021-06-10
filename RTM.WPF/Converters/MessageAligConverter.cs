@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using RTM.Common.Models;
 using RTM.WPF.Helpers;
+using RTM.WPF.Models;
 
 namespace RTM.WPF.Converters
 {
@@ -14,7 +15,7 @@ namespace RTM.WPF.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            User user = value as User;
+            UserClient user = value as UserClient;
             if (user.Id == UserManager.User.Id)
                 return 1;
             else
