@@ -92,10 +92,10 @@
                 <DataTemplate>
                     <Grid x:Name="ContentGrid">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="48" />
+                            <RowDefinition Height="auto" />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0"
+                        <!--<Border Grid.Row="0"
                         Margin="-1 0 -1 0"
                         Background="#7FB3D5 ">
                             <TextBlock x:Name="Header"
@@ -104,7 +104,7 @@
                             FontSize="24"
                             Foreground="White"
                             Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:HamburgerMenu}, Path=SelectedItem.Label, UpdateSourceTrigger=PropertyChanged}" />
-                        </Border>
+                        </Border>-->
                         <!-- ViewModels -->
                         <ContentControl Grid.Row="1" Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.ActiveView, UpdateSourceTrigger=PropertyChanged}"/>
                     </Grid>

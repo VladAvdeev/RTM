@@ -51,10 +51,16 @@
         </ListBox>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="15*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <ListBox  ItemsSource="{Binding SelectedChatGroup.Messages}" >
+            <Border Background="#2471A3">
+                <TextBlock Text="{Binding SelectedChatGroup.Name}" FontSize="30" 
+                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                           />
+            </Border>
+            <ListBox  ItemsSource="{Binding SelectedChatGroup.Messages}"  Grid.Row="1">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="10">
@@ -76,7 +82,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="5*" />
                     <ColumnDefinition Width="Auto" />
@@ -84,7 +90,9 @@
 
                 <TextBox Grid.Column="0" mah:TextBoxHelper.Watermark="Сообщение" Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <Button Content="Отправить" Command="{Binding SendCommand}" Margin="5" />
+                    <Button  Command="{Binding SendCommand}" Margin="5" Foreground="#2471A3">
+                        <iconPacks:MaterialDesign Kind="Send"/>
+                    </Button>
                     <Button Command="{Binding RefreshChatCommand}" Margin="5" >
                         <iconPacks:MaterialDesign Kind="Refresh"/>
                     </Button>

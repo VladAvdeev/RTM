@@ -8,13 +8,12 @@ using RTM.Common.Models;
 
 namespace RTM.WPF.Clients.MainServer
 {
-    class AuthClient
+    class AuthClient : BaseRestClient
     {
-        protected string adress = "https://localhost:5001";
         public User AuthByName(string name)
         {
             var request = new RestRequest($"api/auth/auth-by-name/{name}", Method.GET);
-            var data = new RestClient(adress).Execute<User>(request);
+            var data = CreateClient().Execute<User>(request);
             return data.Data;
         }
     }
