@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RTM.Server.Hubs;
 using RTM.Server.Repositories;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -30,6 +31,7 @@ namespace RTM.Server
         {
             services.AddControllers();
             services.AddSwaggerGen();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +51,7 @@ namespace RTM.Server
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
 
             app.UseSwagger();

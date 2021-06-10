@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:RTM.WPF.Views"
              xmlns:conv="clr-namespace:RTM.WPF.Converters"
              xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -88,7 +88,11 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <TextBox Grid.Column="0" mah:TextBoxHelper.Watermark="Сообщение" Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}" Margin="3"/>
+                <TextBox Grid.Column="0" mah:TextBoxHelper.Watermark="Сообщение" Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}" Margin="3">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding SendCommand}" />
+                    </TextBox.InputBindings>
+                </TextBox>
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                     <Button  Command="{Binding SendCommand}" Margin="5" Foreground="#2471A3">
                         <iconPacks:MaterialDesign Kind="Send"/>

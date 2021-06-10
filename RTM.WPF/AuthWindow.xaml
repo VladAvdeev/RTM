@@ -16,7 +16,11 @@
     <Grid>
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock Text="ЛОГИН" FontSize="28"/>
-            <TextBox Margin="0 10 0 0" mah:TextBoxHelper.Watermark="Имя" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Margin="0 10 0 0" mah:TextBoxHelper.Watermark="Имя" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" >
+                <TextBox.InputBindings>
+                    <KeyBinding Key="Enter" Command="{Binding AuthCommand}" />
+                </TextBox.InputBindings>
+            </TextBox>
             <Button Margin="0 10 0 0" Background="AntiqueWhite" Command="{Binding AuthCommand}">
                 <iconPacks:MaterialDesign Kind="SmokingRooms" />
             </Button>
