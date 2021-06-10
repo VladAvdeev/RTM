@@ -1,0 +1,25 @@
+﻿<Window x:Class="RTM.WPF.AuthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:RTM.WPF" 
+        xmlns:vm="clr-namespace:RTM.WPF.ViewModels"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="AuthWindow" Height="400" Width="400">
+    <Window.DataContext>
+        <vm:AuthViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="ЛОГИН" FontSize="28"/>
+            <TextBox Margin="0 10 0 0" mah:TextBoxHelper.Watermark="Имя" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Margin="0 10 0 0" Background="AntiqueWhite" Command="{Binding AuthCommand}">
+                <iconPacks:MaterialDesign Kind="SmokingRooms" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

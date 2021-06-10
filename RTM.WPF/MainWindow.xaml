@@ -1,0 +1,176 @@
+﻿<Window x:Class="RTM.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:local="clr-namespace:RTM.WPF" 
+        xmlns:v="clr-namespace:RTM.WPF.Views"
+        xmlns:vm="clr-namespace:RTM.WPF.ViewModels"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        x:Name="MainV"
+        Title="RTM" Height="800" Width="800">
+
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:ProfileViewModel}">
+            <v:ProfileView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ChatViewModel}">
+            <v:ChatView />
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+
+        <mah:HamburgerMenu x:Name="HamburgerMenuControl"
+                           DisplayMode="CompactOverlay"
+                           HamburgerWidth="48" 
+                           HamburgerHeight="48"
+                           PaneBackground="#2471A3"
+                           ItemInvoked="HamburgerMenuControl_ItemInvoked">
+            
+            <mah:HamburgerMenu.Resources>
+
+            </mah:HamburgerMenu.Resources>
+            <!-- Header -->
+            <mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
+                <DataTemplate>
+                    <TextBlock HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               Foreground="White"
+                               Text="RTM" />
+                </DataTemplate>
+            </mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
+            <!-- Header Button -->
+            <mah:HamburgerMenu.HamburgerButtonTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <iconPacks:PackIconMaterial Kind="Menu"  Height="32">
+                            <iconPacks:PackIconMaterial.Style>
+                                <Style TargetType="iconPacks:PackIconMaterial">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:HamburgerMenu}, Path=IsPaneOpen}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </iconPacks:PackIconMaterial.Style>
+                        </iconPacks:PackIconMaterial>
+                        <iconPacks:PackIconMaterial Kind="ArrowLeft"  Height="32">
+                            <iconPacks:PackIconMaterial.Style>
+                                <Style TargetType="iconPacks:PackIconMaterial">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:HamburgerMenu}, Path=IsPaneOpen}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </iconPacks:PackIconMaterial.Style>
+                        </iconPacks:PackIconMaterial>
+                    </Grid>
+                </DataTemplate>
+            </mah:HamburgerMenu.HamburgerButtonTemplate>
+            
+            
+            <!-- Menu Items  -->
+            <mah:HamburgerMenu.ItemsSource>
+                <mah:HamburgerMenuItemCollection>
+                    <mah:HamburgerMenuIconItem Label="Профиль" Icon="{iconPacks:MaterialDesign Kind=Person}" Command="{Binding OpenProfileViewCommand}" />
+                    <mah:HamburgerMenuIconItem 
+                        Label="Чаты" Icon="{iconPacks:MaterialDesign Kind=Chat}" Command="{Binding OpenChatViewCommand}">
+                    </mah:HamburgerMenuIconItem>
+                </mah:HamburgerMenuItemCollection>
+            </mah:HamburgerMenu.ItemsSource>
+            <!-- Content -->
+            <mah:HamburgerMenu.ContentTemplate>
+                <DataTemplate>
+                    <Grid x:Name="ContentGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="48" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0"
+                        Margin="-1 0 -1 0"
+                        Background="#7FB3D5 ">
+                            <TextBlock x:Name="Header"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            Foreground="White"
+                            Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=mah:HamburgerMenu}, Path=SelectedItem.Label, UpdateSourceTrigger=PropertyChanged}" />
+                        </Border>
+                        <!-- ViewModels -->
+                        <ContentControl Grid.Row="1" Content="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=DataContext.ActiveView, UpdateSourceTrigger=PropertyChanged}"/>
+                    </Grid>
+                </DataTemplate>
+            </mah:HamburgerMenu.ContentTemplate>
+            <!-- Options -->
+            <mah:HamburgerMenu.OptionsItemsSource>
+                <mah:HamburgerMenuItemCollection>
+                    <mah:HamburgerMenuIconItem Label="Информация">
+                        <mah:HamburgerMenuIconItem.Icon>
+                            <iconPacks:PackIconMaterialDesign Width="22"
+                                        Height="22"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Kind="InfoOutline" />
+                        </mah:HamburgerMenuIconItem.Icon>
+                        <mah:HamburgerMenuIconItem.Tag>
+                            <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="28"
+                                       FontWeight="Bold"
+                                       Text="Информация"/>
+                        </mah:HamburgerMenuIconItem.Tag>
+                    </mah:HamburgerMenuIconItem>
+                </mah:HamburgerMenuItemCollection>
+            </mah:HamburgerMenu.OptionsItemsSource>
+                       
+            
+            <!-- Menu Item Template -->
+            <mah:HamburgerMenu.ItemTemplate>
+                <DataTemplate>
+                    <Grid Height="64">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength, Mode=OneWay}"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <ContentControl  Content="{Binding Icon}" HorizontalAlignment="Center" VerticalAlignment="Center" Focusable="False"/>
+                        <TextBlock Margin="10,0,0,0" Grid.Column="1" VerticalAlignment="Center" FontSize="16" Text="{Binding Label}" />
+                    </Grid>
+                </DataTemplate>
+            </mah:HamburgerMenu.ItemTemplate>
+            <!-- Options Template -->
+            <mah:HamburgerMenu.OptionsItemTemplate>
+                <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
+                    <DockPanel Height="48" LastChildFill="True">
+                        <ContentControl x:Name="IconPart"
+                        Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}"
+                        Content="{Binding Icon}"
+                        DockPanel.Dock="Left"
+                        Focusable="False"
+                        IsTabStop="False" />
+                        <TextBlock x:Name="TextPart"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   Text="{Binding Label}" />
+                    </DockPanel>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=PanePlacement}" Value="Right">
+                            <Setter TargetName="IconPart" Property="DockPanel.Dock" Value="Right" />
+                            <Setter TargetName="TextPart" Property="Margin" Value="8 0 0 0" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
+                </DataTemplate>
+            </mah:HamburgerMenu.OptionsItemTemplate>
+
+        </mah:HamburgerMenu>
+
+    </Grid>
+</Window>
