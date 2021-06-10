@@ -30,7 +30,16 @@ namespace RTM.WPF.ViewModels
                 SetProperty(ref seletedChatGroup, value);
             }
         }
-
+        public User User
+        {
+            get => UserManager.User;
+        }
+        private string userName;
+        public string UserName
+        {
+            get => userName;
+            set => SetProperty(ref userName, value);
+        }
         private string message;
         public string Message { get => message; set => SetProperty(ref message, value); }
 
@@ -40,6 +49,7 @@ namespace RTM.WPF.ViewModels
         {
             SendCommand = new Command(Send, () => Message != null && Message.Length != 0);
             RefreshChatCommand = new Command(RefreshChat);
+            UserName = User.Name;
             Load();
         }
 

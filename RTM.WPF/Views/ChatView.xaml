@@ -56,9 +56,22 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Background="#2471A3">
-                <TextBlock Text="{Binding SelectedChatGroup.Name}" FontSize="30" 
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    
+                        <TextBlock Text="{Binding SelectedChatGroup.Name}" 
+                                   FontSize="30" 
                            VerticalAlignment="Center" HorizontalAlignment="Left"
-                           />
+                           Margin="10" Grid.Column="0"/>
+                    <TextBlock Text="{Binding UserName}" VerticalAlignment="Center" 
+                               FontSize="30"
+                               HorizontalAlignment="Right" Grid.Column="2" Margin="0, 0, 10, 0"/>
+                    
+                </Grid>
             </Border>
             <ListBox  ItemsSource="{Binding SelectedChatGroup.Messages}"  Grid.Row="1">
                 <ListBox.ItemTemplate>
