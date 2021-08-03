@@ -5,12 +5,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="jose-jwt" Version="3.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.17" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="5.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.114.2" />
+    <PackageReference Include="System.ServiceModel.Web" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RTM.Common\RTM.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="SQLLITE\" />
   </ItemGroup>
 
 

@@ -33,7 +33,7 @@
                            HamburgerHeight="48"
                            PaneBackground="#2471A3"
                            ItemInvoked="HamburgerMenuControl_ItemInvoked">
-            
+
             <mah:HamburgerMenu.Resources>
 
             </mah:HamburgerMenu.Resources>
@@ -76,8 +76,8 @@
                     </Grid>
                 </DataTemplate>
             </mah:HamburgerMenu.HamburgerButtonTemplate>
-            
-            
+
+
             <!-- Menu Items  -->
             <mah:HamburgerMenu.ItemsSource>
                 <mah:HamburgerMenuItemCollection>
@@ -131,8 +131,8 @@
                     </mah:HamburgerMenuIconItem>
                 </mah:HamburgerMenuItemCollection>
             </mah:HamburgerMenu.OptionsItemsSource>
-                       
-            
+
+
             <!-- Menu Item Template -->
             <mah:HamburgerMenu.ItemTemplate>
                 <DataTemplate>
@@ -171,6 +171,5 @@
             </mah:HamburgerMenu.OptionsItemTemplate>
 
         </mah:HamburgerMenu>
-
     </Grid>
 </Window>

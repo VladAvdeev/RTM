@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RTM.Common.Models;
+using RTM.Server.Helpers;
 using RTM.Server.Repositories;
 
 namespace RTM.Server.Controllers
@@ -15,6 +16,7 @@ namespace RTM.Server.Controllers
         [HttpGet("get-chats/{userId}")]
         public List<ChatGroup> GetChats(int userId)
         {
+            var User = HttpContext.Request.CheckToken();
             return DataCache.ChatRepository.GetChatGroups(DataCache.UserRepository.Users.Where(x => x.Id == userId).FirstOrDefault());
         }
         [HttpPost("send-message/{chatId}/{userId}/{content}")]

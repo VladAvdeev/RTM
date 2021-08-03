@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using RestSharp;
 using RTM.Common.Models;
+using RTM.WPF.Helpers;
 using RTM.WPF.Models;
 
 namespace RTM.WPF.Clients.MainServer
@@ -16,6 +17,7 @@ namespace RTM.WPF.Clients.MainServer
         public ObservableCollection<ChatGroupClient> GetChats(int userId)
         {
             var request = new RestRequest($"api/chat/get-chats/{userId}", Method.GET);
+            request.AddHeader("Authorization", "Bearer " + UserManager.User.Token);
             var response = new RestClient(adress).Execute<List<ChatGroup>>(request);
             var data = response.Data;
             ObservableCollection<ChatGroupClient> obs = new ObservableCollection<ChatGroupClient>();

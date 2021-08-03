@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using RTM.Common.Models;
+using RTM.Server.Helpers;
 using RTM.Server.Models;
 
 namespace RTM.Server.Controllers
@@ -12,6 +14,11 @@ namespace RTM.Server.Controllers
     [Route("Api")]
     public class TestController : ControllerBase
     {
+        User User { get; set; }
+        public TestController()
+        {
+             
+        }
         private readonly List<TestModel> testModels = new List<TestModel>()
             {
                 new TestModel(1, "Model1", new DateTime(1998, 02, 20)),
@@ -25,6 +32,7 @@ namespace RTM.Server.Controllers
         [HttpGet("GetTestModels")]
         public List<TestModel> TestModels()
         {
+            User = HttpContext.Request.CheckToken();
             return testModels;
         }
         [HttpGet("GetTheYoungest")]

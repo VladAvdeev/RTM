@@ -14,6 +14,7 @@ namespace RTM.Server.Repositories
         {
             Users = new List<User>
             {
+                new User(0, "Admin"),
                 new User(++sequence, "Дима"),
                 new User(++sequence, "Саша"),
                 new User(++sequence, "Влад"),
@@ -34,6 +35,11 @@ namespace RTM.Server.Repositories
         public void AddUser(string name)
         {
             Users.Add(new User(++sequence, name));
+        }
+
+        public User GetAdmin()
+        {
+            return Users.Where(x => x.Id == 0).FirstOrDefault();
         }
 
         private int GetSequence()
