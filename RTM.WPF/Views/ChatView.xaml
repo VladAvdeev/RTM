@@ -11,6 +11,9 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <conv:MessageAligConverter x:Key="messageAligConverter" />
+        <conv:ChatIconConverter x:Key="chatIconConverter" />
+        <conv:ColorChatIconConverter x:Key="colorChatIconConverter"/>
+
     </UserControl.Resources>
 
     <Grid>
@@ -29,7 +32,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <iconPacks:PackIconMaterialDesign Grid.Column="0" Kind="Person" Width="32" Height="32" Margin="0 3 10 0" Foreground="Green"/>
+                        <iconPacks:PackIconMaterialDesign Grid.Column="0" Kind="{Binding Users, Converter={StaticResource chatIconConverter}}" Width="32" Height="32" Margin="0 3 10 0" Foreground="{Binding Users, Converter={StaticResource colorChatIconConverter}}"/>
                         <Grid Grid.Column="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -41,9 +44,9 @@
                                 <RowDefinition />
                             </Grid.RowDefinitions>
                             <TextBlock Text="{Binding Name}" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="16" />
-                            <mah:Badged Grid.Column="1" Badge="0" HorizontalAlignment="Left" VerticalAlignment="Center" BadgeBackground="#E74C3C" Margin="10 0 0 0"/>
-                            <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding LastMessage.Date,StringFormat=dd.MM.yyyy HH:mm}"/>
-                            <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"  Text="{Binding LastMessage.Content}" />
+                            <!--<mah:Badged Grid.Column="1" Badge="0" HorizontalAlignment="Left" VerticalAlignment="Center" BadgeBackground="#E74C3C" Margin="10 0 0 0"/>-->
+                            <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding LastMessage.Date,StringFormat=dd.MM.yyyy HH:mm, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"/>
+                            <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"  Text="{Binding LastMessage.Content, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Grid>
                 </DataTemplate>
@@ -67,13 +70,12 @@
                                    FontSize="30" 
                            VerticalAlignment="Center" HorizontalAlignment="Left"
                            Margin="10" Grid.Column="0"/>
-                    <TextBlock Text="{Binding UserName}" VerticalAlignment="Center" 
+                    <!--<TextBlock Text="{Binding UserName}" VerticalAlignment="Center" 
                                FontSize="30"
-                               HorizontalAlignment="Right" Grid.Column="2" Margin="0, 0, 10, 0"/>
-                    
+                               HorizontalAlignment="Right" Grid.Column="2" Margin="0, 0, 10, 0"/>-->
                 </Grid>
             </Border>
-            <ListBox  ItemsSource="{Binding SelectedChatGroup.Messages}"  Grid.Row="1">
+            <ListBox x:Name="lbMessages" ItemsSource="{Binding SelectedChatGroup.Messages}" SelectionChanged="lbMessages_SelectionChanged" Grid.Row="1" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="10">
@@ -82,13 +84,17 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid Grid.Column="{Binding User, Converter={StaticResource messageAligConverter}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-
-                                <TextBlock Grid.Column="0" Text="{Binding Content}" TextWrapping="Wrap" />
-                                <TextBlock Grid.Column="1" Text="{Binding Date, StringFormat=dd.MM.yyyy HH:mm}"/>
+                                <TextBlock Grid.Column="0" Grid.Row="0" Text="{Binding User.Name}" FontWeight="ExtraLight" Foreground="Coral" FontSize="14"/>
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Content}" TextWrapping="Wrap" FontSize="14"/>
+                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Date, StringFormat=dd.MM.yyyy HH:mm}" FontSize="14"/>
 
                             </Grid>
                         </Grid>

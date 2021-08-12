@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -63,48 +64,61 @@ namespace RTM.WPF.ViewModels
                 MessageBox.Show(ex.Message);
             }
             Message = String.Empty;
+            //connection.DisposeAsync();
             //RefreshChatAsync();
         }
 
-        //private async Task RefreshChatAsync()
-        //{
-        //     await Task.Run(() => RefreshChatAuto());
-        //}
-        //private void RefreshChat()
-        //{
-        //    SelectedChatGroup = new ChatClient().RefreshChatGroup(SelectedChatGroup.Id, UserManager.User.Id);
-        //}
-        //private void RefreshChatAuto()
-        //{
-        //    while (true)
-        //    {
-        //        SelectedChatGroup = new ChatClient().RefreshChatGroup(SelectedChatGroup.Id, UserManager.User.Id);
-        //        Thread.Sleep(3000);
-        //    }
-        //}
+        private void RefreshOnline(List<int> ids)
+        {
+            foreach (var chat in ChatGroups)
+            {
+                foreach (var user in chat.Users)
+                {
+                    if (ids.Contains(user.Id))
+                        user.IsOnline = true;
+                    else
+                        user.IsOnline = false;
+                }
+            }
+            ChatGroups = new ObservableCollection<ChatGroupClient>(ChatGroups);
+        }
         private async void Load()
         {
             ChatGroups = new ChatClient().GetChats(UserManager.User.Id);
 
             connection = new HubConnectionBuilder()
-                .WithUrl("https://localhost:5001/chatHub")
+                .WithUrl("https://localhost:5001/chatHub", options =>
+                {
+                    options.HttpMessageHandlerFactory = message =>
+                    {
+                        if (message is HttpClientHandler clientHandler)
+                            clientHandler.ServerCertificateCustomValidationCallback += (sender, certificate, chain, sslPolicyErrors) => { return true; };
+                        return message;
+                    };
+                })
+                .WithAutomaticReconnect()
                 .Build();
 
-            connection.Closed += async (error) =>
-            {
-                await Task.Delay(new Random().Next(0, 5) * 1000);
-                await connection.StartAsync();
-            };
+            //connection.Closed += async (error) =>
+            //{
+            //    await Task.Delay(new Random().Next(0, 5) * 1000);
+            //    await connection.StartAsync();
+            //};
 
             connection.On<int, User, string>("ReceiveMessage", (chatId, user, message) =>
             {
-                ChatGroups.Where(x => x.Id == chatId).FirstOrDefault().AddMessage(new MessageClient() { Id = 0, User = new UserClient() { Id = user.Id, Name = user.Name }, Content = message, Date = DateTime.Now });
+               var chat = ChatGroups.Where(x => x.Id == chatId).FirstOrDefault();
+               chat.AddMessage(new MessageClient() { Id = 0, User = new UserClient() { Id = user.Id, Name = user.Name }, Content = message, Date = DateTime.Now });
+               ChatGroups = new ObservableCollection<ChatGroupClient>(ChatGroups.OrderByDescending(x => x.LastMessage.Date).ToList());
             });
+
+            connection.On("SendUser", () => connection.InvokeAsync("SendUser", UserManager.User.Id));
+
+            connection.On<List<int>>("ReshreshOnline", (usersIds) => RefreshOnline(usersIds));
 
             try
             {
                 await connection.StartAsync();
-                MessageBox.Show("Connect");
             }
             catch (Exception ex)
             {

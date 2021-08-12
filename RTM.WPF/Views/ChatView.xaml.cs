@@ -23,6 +23,12 @@ namespace RTM.WPF.Views
         public ChatView()
         {
             InitializeComponent();
+            
+        }
+
+        private void lbMessages_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

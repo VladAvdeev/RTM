@@ -62,54 +62,54 @@ namespace RTM.Server
             //        }
             //    };
             //});
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //       .AddJwtBearer(options =>
+            //       {
+            //           options.Authority = "api/auth/token";
+            //           options.RequireHttpsMetadata = false;
+            //           options.TokenValidationParameters = new TokenValidationParameters
+            //           {
+            //                // укзывает, будет ли валидироваться издатель при валидации токена
+            //                ValidateIssuer = true,
+            //                // строка, представляющая издателя
+            //                ValidIssuer = AuthOptions.ISSUER,
+
+            //                // будет ли валидироваться потребитель токена
+            //                ValidateAudience = true,
+            //                // установка потребителя токена
+            //                ValidAudience = AuthOptions.AUDIENCE,
+            //                // будет ли валидироваться время существования
+            //                ValidateLifetime = true,
+
+            //                // установка ключа безопасности
+            //                IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+            //                // валидация ключа безопасности
+            //                ValidateIssuerSigningKey = true,
+            //           };
+            //           options.Events = new JwtBearerEvents
+            //           {
+            //               OnMessageReceived = context =>
+            //               {
+            //                   var accessToken = context.Request.Query["access_token"];
+
+            //                   // если запрос направлен хабу
+            //                   var path = context.HttpContext.Request.Path;
+            //                   if (!string.IsNullOrEmpty(accessToken) &&
+            //                       (path.StartsWithSegments("/notificationHub")))
+            //                   {
+            //                       // получаем токен из строки запроса
+            //                       context.Token = accessToken;
+            //                   }
+            //                   return Task.CompletedTask;
+            //               }
+            //           };
+            //       });
             #endregion
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                   .AddJwtBearer(options =>
-                   {
-                       options.Authority = "api/auth/token";
-                       options.RequireHttpsMetadata = false;
-                       options.TokenValidationParameters = new TokenValidationParameters
-                       {
-                            // укзывает, будет ли валидироваться издатель при валидации токена
-                            ValidateIssuer = true,
-                            // строка, представляющая издателя
-                            ValidIssuer = AuthOptions.ISSUER,
-
-                            // будет ли валидироваться потребитель токена
-                            ValidateAudience = true,
-                            // установка потребителя токена
-                            ValidAudience = AuthOptions.AUDIENCE,
-                            // будет ли валидироваться время существования
-                            ValidateLifetime = true,
-
-                            // установка ключа безопасности
-                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-                            // валидация ключа безопасности
-                            ValidateIssuerSigningKey = true,
-                       };
-                       options.Events = new JwtBearerEvents
-                       {
-                           OnMessageReceived = context =>
-                           {
-                               var accessToken = context.Request.Query["access_token"];
-
-                               // если запрос направлен хабу
-                               var path = context.HttpContext.Request.Path;
-                               if (!string.IsNullOrEmpty(accessToken) &&
-                                   (path.StartsWithSegments("/notificationHub")))
-                               {
-                                   // получаем токен из строки запроса
-                                   context.Token = accessToken;
-                               }
-                               return Task.CompletedTask;
-                           }
-                       };
-                   });
-
+            services.AddAuthentication();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "EK ASUT API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "RTM API", Version = "v1" });
                 c.AddSecurityDefinition("JWT Token", new OpenApiSecurityScheme
                 {
                     Description = "JWT Token",
@@ -135,6 +135,8 @@ namespace RTM.Server
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+
 
             app.UseAuthentication();
             app.UseAuthorization();

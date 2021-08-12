@@ -18,10 +18,10 @@ namespace RTM.WPF.Clients.MainServer
         {
             var request = new RestRequest($"api/chat/get-chats/{userId}", Method.GET);
             request.AddHeader("Authorization", "Bearer " + UserManager.User.Token);
-            var response = new RestClient(adress).Execute<List<ChatGroup>>(request);
+            var response = CreateClient().Execute<List<ChatGroup>>(request);
             var data = response.Data;
             ObservableCollection<ChatGroupClient> obs = new ObservableCollection<ChatGroupClient>();
-            foreach (var item in data)
+            foreach (var item in data.OrderByDescending(x=> x.LastMessage.Date).ToList())
             {
                 ChatGroupClient cl = new ChatGroupClient
                 {

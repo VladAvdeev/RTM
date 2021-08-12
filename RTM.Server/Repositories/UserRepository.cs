@@ -15,10 +15,10 @@ namespace RTM.Server.Repositories
             Users = new List<User>
             {
                 new User(0, "Admin"),
-                new User(++sequence, "Дима"),
-                new User(++sequence, "Саша"),
-                new User(++sequence, "Влад"),
-                new User(++sequence, "Сларк")
+                new User(++sequence, "User1"),
+                new User(++sequence, "User2"),
+                new User(++sequence, "User3"),
+                new User(++sequence, "User4")
             };
         }
         public User GetUserByName(string name)
@@ -32,6 +32,7 @@ namespace RTM.Server.Repositories
                 throw new Exception("Пользователя не существует");
             user.Name = name;
         }
+
         public void AddUser(string name)
         {
             Users.Add(new User(++sequence, name));

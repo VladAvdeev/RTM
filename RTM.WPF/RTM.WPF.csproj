@@ -303,7 +303,13 @@
     <Compile Include="Clients\MainServer\UserClient.cs" />
     <Compile Include="Clients\Other\Models\TestModel.cs" />
     <Compile Include="Clients\Other\TestModelClient.cs" />
+    <Compile Include="Converters\ChatIconConverter.cs" />
+    <Compile Include="Converters\ChatUserNameConverter.cs" />
+    <Compile Include="Converters\ColorChatIconConverter.cs" />
+    <Compile Include="Converters\EmptyCollectionToVisibility.cs" />
     <Compile Include="Converters\MessageAligConverter.cs" />
+    <Compile Include="Converters\NotificationTypeColorConverter.cs" />
+    <Compile Include="Converters\NotificationTypeConverter.cs" />
     <Compile Include="Helpers\DiConfigModule.cs" />
     <Compile Include="Helpers\NinjectDi.cs" />
     <Compile Include="Helpers\UserManager.cs" />

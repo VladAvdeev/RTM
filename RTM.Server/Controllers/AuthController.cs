@@ -105,7 +105,7 @@ namespace RTM.Server.Controllers
         [Authorize]
         [HttpGet("IdentityName")]
         public string GetName()
-        {
+        {         
             return $"{User?.Identity?.Name}";
         }
     }

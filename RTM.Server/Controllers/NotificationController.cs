@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using RTM.Common.Models;
 using RTM.Server.Hubs;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,13 @@ namespace RTM.Server.Controllers
         {
             this.hub = hub;
         }
-        [HttpGet("SendAll")]
-        public async Task SendAll(string message)
+        [HttpPost("send-notification")]
+        public async Task SendNotification(int? userid, [FromBody]NotificationModel notification)
         { 
-            await hub.Clients.All.SendAsync("ReceiveAll", message);
+            if(userid.HasValue)
+                await hub.Clients.Group(userid.ToString()).SendAsync("Receive", notification);
+            else
+                await hub.Clients.All.SendAsync("ReceiveAll", notification);
         }
     }
 }
